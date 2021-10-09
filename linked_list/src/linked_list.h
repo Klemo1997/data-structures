@@ -27,7 +27,7 @@ void linked_list_print(struct Node* head);
 /**
  * Prepend item as the new head of linked list
  */
-void linked_list_prepend(struct Node* head, int data);
+void linked_list_prepend(struct Node** head, int data);
 
 /**
  * Append item at the end of linked list
