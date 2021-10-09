@@ -32,7 +32,7 @@ void linked_list_prepend(struct Node** head, int data);
 /**
  * Append item at the end of linked list
  */
-void linked_list_append(struct Node* head, int data);
+void linked_list_append(struct Node** head, int data);
 
 /**
  * Delete first match of item from linked list
