@@ -15,11 +15,6 @@ struct Node {
 struct Node* linked_list_create_node(int value);
 
 /**
- * Create empty linked list
- */
-struct Node* linked_list_create();
-
-/**
  * Print values in linked list
  */
 void linked_list_print(struct Node* head);
