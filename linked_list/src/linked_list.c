@@ -1,5 +1,8 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "linked_list.h"
+
+#define PRINT_SEPARATOR ", "
 
 struct Node* linked_list_create_node(int value) {
     struct Node* newNode = (struct Node*) malloc (sizeof(struct Node));
@@ -52,4 +55,17 @@ void linked_list_append(struct Node** linked_list, int data) {
     struct Node** last_element = linked_list_get_last_element(linked_list);
 
     (*last_element)->next = linked_list_create_node(data);
+}
+
+void linked_list_print(struct Node* head) {
+    struct Node* current_element = head;
+
+    while (current_element != NULL) {
+        printf("%d", current_element->data);
+        current_element = current_element->next;
+
+        if (current_element != NULL) {
+            printf(PRINT_SEPARATOR);
+        }
+    }
 }
