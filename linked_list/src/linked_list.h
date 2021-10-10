@@ -32,6 +32,6 @@ void linked_list_append(struct Node** head, int data);
 /**
  * Delete first match of item from linked list
  */
-void linked_list_delete(struct Node* head, int data);
+void linked_list_delete(struct Node** head, int data);
 
 #endif _LINKED_LIST_H_

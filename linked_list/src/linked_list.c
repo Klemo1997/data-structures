@@ -11,6 +11,18 @@ struct Node* linked_list_create_node(int value) {
     return newNode;
 }
 
+void linked_list_destroy_node(struct Node* node) {
+    // remove reference to next node
+    node->next = NULL;
+
+    // free allocated mem
+    free(node);
+
+    // assign pointer to NULL,
+    // so it's not pointing to deallocated mem address
+    node = NULL;
+}
+
 void linked_list_prepend(struct Node** linked_list, int data) {
     if (*linked_list == NULL) {
         *linked_list = linked_list_create_node(data);
@@ -68,4 +80,34 @@ void linked_list_print(struct Node* head) {
             printf(PRINT_SEPARATOR);
         }
     }
+}
+
+void linked_list_delete(struct Node** head, int data) {
+    struct Node* current_element = *head;
+    struct Node* previous_element = NULL;
+
+    // find the node
+    while (current_element != NULL) {
+        if (current_element->data == data) {
+            break;
+        }
+        previous_element = current_element;
+        current_element = current_element->next;
+    }
+
+    if (current_element == NULL) {
+        // node not found
+        return;
+    }
+
+    if (previous_element != NULL) {
+        // if previous node exists, its next reference should point to element after deleted node
+        previous_element->next = current_element->next;
+    } else {
+        // if previous node does not exist, it means we are deleting list head
+        (*head) = current_element->next;
+    }
+
+    // the deletion was successful so we can free allocated memory
+    linked_list_destroy_node(current_element);
 }
