@@ -111,3 +111,16 @@ void linked_list_delete(struct Node** head, int data) {
     // the deletion was successful so we can free allocated memory
     linked_list_destroy_node(current_element);
 }
+
+void linked_list_destroy(struct Node** head) {
+    struct Node* current = *head;
+    struct Node* next;
+
+    while (current != NULL) {
+        next = current->next;
+        linked_list_destroy_node(current);
+        current = next;
+    }
+
+    *head = NULL;
+}

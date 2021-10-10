@@ -34,4 +34,9 @@ void linked_list_append(struct Node** head, int data);
  */
 void linked_list_delete(struct Node** head, int data);
 
+/**
+ * Destroy whole linked list and free its memory
+ */
+void linked_list_destroy(struct Node** head);
+
 #endif _LINKED_LIST_H_

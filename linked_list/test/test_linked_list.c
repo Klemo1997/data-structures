@@ -102,3 +102,11 @@ CHEAT_TEST(linked_list_delete_tail_works,
            1
     );
 )
+
+CHEAT_TEST(linked_list_destroy,
+    struct Node *linked_list = getAppendedListFromIntArray(twoElementsArray, 2);
+    linked_list_destroy(&linked_list);
+    cheat_assert(
+    linked_list == NULL
+    );
+)
