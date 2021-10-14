@@ -10,8 +10,14 @@ struct TreeNode {
     struct TreeNode* right;
 };
 
+/**
+ * Allocates and returns new Tree node struct
+ */
 struct TreeNode* binary_search_tree_create_node(int data);
 
+/**
+ * Inserts node with given value into Tree
+ */
 void binary_search_tree_insert(struct TreeNode** root, int data);
 
 #endif _LINKED_LIST_H_
