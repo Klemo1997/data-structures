@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "binary_search_tree.h"
 
-struct TreeNode* binary_search_tree_create_node(int data) {
+struct TreeNode* binary_search_tree_create_node(const int data) {
     struct TreeNode* node = (struct TreeNode*) malloc(sizeof(struct TreeNode));
 
     node->data = data;
@@ -12,7 +12,7 @@ struct TreeNode* binary_search_tree_create_node(int data) {
     return node;
 }
 
-void binary_search_tree_insert(struct TreeNode** root, int data) {
+void binary_search_tree_insert(struct TreeNode** root, const int data) {
     // If the tree has no root
     // assign new node as root
     if (*root == NULL) {
