@@ -31,3 +31,42 @@ CHEAT_TEST(binary_search_tree_insertion_does_not_add_duplicates,
     cheat_assert(root->left == NULL);
     cheat_assert(root->right == NULL);
 )
+
+CHEAT_TEST(binary_search_tree_search_finds_root,
+    struct TreeNode *root = NULL;
+    binary_search_tree_insert(&root, 2);
+
+    cheat_assert_int(
+       2,
+       binary_search_tree_search(root, 2)->data
+    );
+)
+
+CHEAT_TEST(binary_search_tree_search_finds_recursively,
+    struct TreeNode *root = NULL;
+    int numbers[3] = {2,1,3};
+
+    for (int i = 0; i < 3; i++) {
+       binary_search_tree_insert(&root, numbers[i]);
+    }
+
+    for (int i = 0; i < 3; i++) {
+       cheat_assert_int(
+               numbers[i],
+               binary_search_tree_search(root, numbers[i])->data
+       );
+    }
+)
+
+CHEAT_TEST(binary_search_tree_search_returns_null_if_not_found,
+    struct TreeNode *root = NULL;
+    int numbers[3] = {2,1,3};
+
+    for (int i = 0; i < 3; i++) {
+       binary_search_tree_insert(&root, numbers[i]);
+    }
+
+    cheat_assert(
+       binary_search_tree_search(root, 5) == NULL
+    );
+)

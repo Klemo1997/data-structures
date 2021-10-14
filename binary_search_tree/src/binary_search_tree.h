@@ -20,4 +20,10 @@ struct TreeNode* binary_search_tree_create_node(int data);
  */
 void binary_search_tree_insert(struct TreeNode** root, int data);
 
+/**
+ * Search value within binary search tree, if the value does not exist
+ * return NULL instead
+ */
+struct TreeNode* binary_search_tree_search(struct TreeNode* root, int data);
+
 #endif _LINKED_LIST_H_

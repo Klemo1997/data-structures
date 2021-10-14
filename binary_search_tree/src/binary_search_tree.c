@@ -39,3 +39,17 @@ void binary_search_tree_insert(struct TreeNode** root, const int data) {
         binary_search_tree_insert(&(*root)->right, data);
     }
 }
+
+struct TreeNode* binary_search_tree_search(struct TreeNode* root, const int data) {
+    if (root == NULL) {
+        return NULL;
+    }
+
+    if (data == root->data) {
+        return root;
+    }
+
+    return data < root->data
+        ? binary_search_tree_search(root->left, data)
+        : binary_search_tree_search(root->right, data);
+}
