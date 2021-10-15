@@ -26,4 +26,10 @@ void binary_search_tree_insert(struct TreeNode** root, int data);
  */
 struct TreeNode* binary_search_tree_search(struct TreeNode* root, int data);
 
+/**
+ * Iterative version of BST search - has O(1) space complexity compared
+ * to O(N) of recursive version, is slightly faster and also more scalable
+ */
+struct TreeNode* binary_search_tree_iterative_search(struct TreeNode* root, int data);
+
 #endif _LINKED_LIST_H_

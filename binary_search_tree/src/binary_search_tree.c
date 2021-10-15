@@ -53,3 +53,19 @@ struct TreeNode* binary_search_tree_search(struct TreeNode* root, const int data
         ? binary_search_tree_search(root->left, data)
         : binary_search_tree_search(root->right, data);
 }
+
+struct TreeNode* binary_search_tree_iterative_search(struct TreeNode* root, const int data) {
+    while (root != NULL) {
+        if (data == root->data) {
+            return root;
+        }
+
+        if (data < root->data) {
+            root = root->left;
+        } else {
+            root = root->right;
+        }
+    }
+
+    return root;
+}
