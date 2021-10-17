@@ -28,12 +28,31 @@ CHEAT_DECLARE(
         }
 )
 
+/**
+ * Use case - insertion should work on empty tree
+ *              NULL                             2
+ *                           insert(2)
+ *                          --------->
+ */
 CHEAT_TEST(binary_search_tree_insertion_to_empty_tree,
     struct TreeNode *root = get_single_node_tree();
 
     cheat_assert_int(root->data, 2);
 )
 
+/**
+ * Use case - insertion should respect BST order rule
+ *              NULL                             2
+ *                           insert(2)
+ *                          --------->
+ *              2                                2
+ *                          insert(1)           /
+ *                         ---------->         1
+ *
+ *              2                                2
+ *             /            insert(3)           / \
+ *            1            ---------->         1   3
+ */
 CHEAT_TEST(binary_search_tree_insertion_multiple_inserts,
     struct TreeNode *root = get_tree_with_children();
 
@@ -42,6 +61,16 @@ CHEAT_TEST(binary_search_tree_insertion_multiple_inserts,
     cheat_assert_int(root->right->data, 3);
 )
 
+/**
+ * Use case - insertion should prevent adding duplicates
+ *              NULL                             2
+ *                           insert(2)
+ *                          --------->
+ *              2                                2
+ *                          insert(2)
+ *                         ---------->
+ *
+ */
 CHEAT_TEST(binary_search_tree_insertion_does_not_add_duplicates,
     struct TreeNode *root = NULL;
     binary_search_tree_insert(&root, 2);
@@ -52,6 +81,9 @@ CHEAT_TEST(binary_search_tree_insertion_does_not_add_duplicates,
     cheat_assert(root->right == NULL);
 )
 
+/**
+ * Use case - search for root
+ */
 CHEAT_TEST(binary_search_tree_search_finds_root,
     struct TreeNode *root = NULL;
     binary_search_tree_insert(&root, 2);
@@ -62,6 +94,9 @@ CHEAT_TEST(binary_search_tree_search_finds_root,
     );
 )
 
+/**
+ * Use case - deeper search
+ */
 CHEAT_TEST(binary_search_tree_search_finds_recursively,
     struct TreeNode *root = get_tree_with_children();
     int numbers[3] = {2,1,3};
@@ -74,6 +109,9 @@ CHEAT_TEST(binary_search_tree_search_finds_recursively,
     }
 )
 
+/**
+ * Use case - searching for non existing node
+ */
 CHEAT_TEST(binary_search_tree_search_returns_null_if_not_found,
     struct TreeNode *root = get_tree_with_children();
 
@@ -82,6 +120,9 @@ CHEAT_TEST(binary_search_tree_search_returns_null_if_not_found,
     );
 )
 
+/**
+ * Use case - search for root with iterative method
+ */
 CHEAT_TEST(binary_search_tree_iterative_search_finds_root,
    struct TreeNode *root = NULL;
    binary_search_tree_insert(&root, 2);
@@ -92,7 +133,10 @@ CHEAT_TEST(binary_search_tree_iterative_search_finds_root,
    );
 )
 
-CHEAT_TEST(binary_search_tree_iterative_search_finds_recursively,
+/**
+ * Use case - search with iterative method
+ */
+CHEAT_TEST(binary_search_tree_iterative_search_finds_iteratively,
     struct TreeNode *root = get_tree_with_children();
     int numbers[3] = {2,1,3};
 
@@ -104,14 +148,23 @@ CHEAT_TEST(binary_search_tree_iterative_search_finds_recursively,
     }
 )
 
+/**
+ * Use case - searching for non existing node with iterative method
+ */
 CHEAT_TEST(binary_search_tree_iterative_search_returns_null_if_not_found,
     struct TreeNode *root = get_tree_with_children();
 
     cheat_assert(
-       binary_search_tree_search(root, 5) == NULL
+       binary_search_tree_iterative_search(root, 5) == NULL
     );
 )
 
+/**
+ * Use case - empty tree
+ *     NULL                 NULL
+ *             delete(2)
+ *            --------->
+ */
 CHEAT_TEST(binary_search_tree_delete_does_nothing_with_empty_tree,
     struct TreeNode *root = NULL;
     binary_search_tree_delete(&root, 2);
@@ -119,7 +172,12 @@ CHEAT_TEST(binary_search_tree_delete_does_nothing_with_empty_tree,
     cheat_assert(root == NULL);
 )
 
-
+/**
+ * Use case - single node tree
+ *     2                             NULL
+ *                 delete(2)
+ *                --------->
+ */
 CHEAT_TEST(binary_search_tree_deletes_single_node,
     struct TreeNode *root = get_single_node_tree();
     binary_search_tree_delete(&root, 2);
