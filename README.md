@@ -4,7 +4,7 @@ implemented in C99 language.
 
 Repository currently contains implementation of:
 1. [Linked list](linked_list)
-2. [Binary search tree](binary_search_tree) (in progress)
+2. [Binary search tree](binary_search_tree)
 
 ## How to run it:
 
