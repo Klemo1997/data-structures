@@ -52,3 +52,13 @@ bool trie_search(struct TrieNode* root, const char* key) {
 
     return temp->is_end_of_word;
 }
+
+bool trie_is_node_empty(struct TrieNode *root) {
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        if (root->children[i]) {
+            return false;
+        }
+    }
+
+    return true;
+}

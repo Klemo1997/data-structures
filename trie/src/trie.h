@@ -34,4 +34,9 @@ void trie_insert(struct TrieNode *root, const char *key);
  */
 bool trie_search(struct TrieNode *root, const char *key);
 
+/**
+ * Checks if node has some allocated children
+ */
+bool trie_is_node_empty(struct TrieNode *root);
+
 #endif _TRIE_H_
