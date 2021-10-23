@@ -44,4 +44,12 @@ bool trie_is_node_empty(struct TrieNode *root);
  */
 void trie_delete(struct TrieNode **root, const char *key);
 
+/**
+ * Get the longest common prefix matching given key
+ *
+ * Example: if dictionary contains keys: {a, are, xyz}
+ * and key "arebcd" is provided, it should return "are"
+ */
+const char* trie_get_longest_prefix(struct TrieNode* root, const char *key);
+
 #endif _TRIE_H_

@@ -7,6 +7,23 @@
 #include "cheats.h"
 #include "trie.h"
 
+CHEAT_DECLARE(
+    void assert_string(const char* received, const char* expected) {
+        cheat_assert_int(strcmp(received, expected), 0);
+    }
+
+    struct TrieNode* get_test_dictionary() {
+        struct TrieNode* root = trie_create_node();
+        char keys[][8] = {"are", "area", "base", "cat", "cater", "children", "basement"};
+
+        for (int i = 0; i < 7; i++) {
+            trie_insert(root, keys[i]);
+        }
+
+        return root;
+    }
+)
+
 /**
  * Use case - insertion should work on empty trie
  *     root                             root
@@ -167,4 +184,53 @@ CHEAT_TEST(trie_delete_preserves_shared_path_when_longer_word_is_deleted,
 
     cheat_assert(trie_search(root, "test"));
     cheat_assert(!trie_search(root, "testing"));
+)
+
+/**
+ * Use case - get longest prefix:
+ * When a word that is part of input string
+ * exists in trie, it should be retrieved
+ */
+CHEAT_TEST(trie_get_longest_prefix_case1,
+    struct TrieNode* root = get_test_dictionary();
+    assert_string(
+        trie_get_longest_prefix(root, "caterer"),
+        "cater"
+    );
+)
+
+/**
+ * Use case - get longest prefix:
+ * When an exact match exists in trie, it should be retrieved
+ */
+CHEAT_TEST(trie_get_longest_prefix_case2,
+    struct TrieNode* root = get_test_dictionary();
+    assert_string(
+       trie_get_longest_prefix(root, "basement"),
+       "basement"
+    );
+)
+
+/**
+ * Use case - get longest prefix:
+ * When an exact match exists in trie, it should be retrieved
+ */
+CHEAT_TEST(trie_get_longest_prefix_case3,
+    struct TrieNode* root = get_test_dictionary();
+    assert_string(
+       trie_get_longest_prefix(root, "are"),
+       "are"
+    );
+)
+
+/**
+ * Use case - get longest prefix:
+ * When trie does not contain given key, it should return empty string
+ */
+CHEAT_TEST(trie_get_longest_prefix_case4,
+   struct TrieNode* root = get_test_dictionary();
+   assert_string(
+       trie_get_longest_prefix(root, "xyz"),
+       ""
+   );
 )

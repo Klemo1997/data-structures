@@ -100,3 +100,36 @@ void trie_delete_recursive(struct TrieNode** root, const char *key, const int de
 void trie_delete(struct TrieNode **root, const char *key) {
     trie_delete_recursive(root, key, 0);
 }
+
+const char* trie_get_longest_prefix(struct TrieNode* root, const char *key) {
+
+    // Maximum length of prefix can be same as key length, we can reallocate later
+    char* prefix_holder = (char*) malloc (sizeof(char) * (strlen(key) + 1));
+    char* characters_holder = (char*) malloc (sizeof(char) * (strlen(key) + 1));
+
+    struct TrieNode* temp = root;
+    int char_index;
+
+    for (int i = 0; i < strlen(key); i++) {
+        if (temp == NULL) {
+            break;
+        }
+
+        char_index = CHAR_TO_INDEX(key[i]);
+        temp = temp->children[char_index];
+
+        characters_holder[i] = key[i];
+
+        if (temp && temp->is_end_of_word) {
+            strcpy(prefix_holder, characters_holder);
+        }
+    }
+
+    // Deallocate characters holder
+    free(characters_holder);
+
+    // Resize prefix holder to its real size (free unused memory)
+    prefix_holder = (char*) realloc(prefix_holder, (strlen(prefix_holder) + 1) * sizeof(char));
+
+    return prefix_holder;
+}
