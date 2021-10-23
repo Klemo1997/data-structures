@@ -1,9 +1,30 @@
 #define CHEAT_NO_MATH
 
 #include <stdbool.h>
+#include <string.h>
+
 #include "cheat.h"
 #include "cheats.h"
 #include "trie.h"
+
+CHEAT_DECLARE(
+    void assert_trie_contains(struct TrieNode* root, const char* key) {
+        struct TrieNode* temp = root;
+        int char_index;
+
+        for (int i = 0; i < strlen(key); i++) {
+            cheat_assert(temp != NULL);
+            //todo: This applies only on non-crossing words in tries
+            cheat_assert(temp->is_end_of_word == false);
+
+            char_index = CHAR_TO_INDEX(key[i]);
+            temp = temp->children[char_index];
+        }
+
+        cheat_assert(temp != NULL);
+        cheat_assert(temp->is_end_of_word == true);
+    }
+)
 
 /**
  * Use case - insertion should work on empty trie
@@ -16,8 +37,7 @@ CHEAT_TEST(trie_insertion_to_empty_trie,
     struct TrieNode* root = trie_create_node();
     trie_insert(root, "a");
 
-    cheat_assert(root->children[0] != NULL);
-    cheat_assert(root->children[0]->is_end_of_word == true);
+    assert_trie_contains(root, "a");
 )
 
 /**
@@ -32,10 +52,7 @@ CHEAT_TEST(trie_multiple_char_insertion_to_empty_trie,
     struct TrieNode* root = trie_create_node();
     trie_insert(root, "ab");
 
-    cheat_assert(root->children[0] != NULL);
-    cheat_assert(root->children[0]->is_end_of_word == false);
-    cheat_assert(root->children[0]->children[1] != NULL);
-    cheat_assert(root->children[0]->children[1]->is_end_of_word == true);
+    assert_trie_contains(root, "ab");
 )
 
 /**
@@ -53,19 +70,6 @@ CHEAT_TEST(trie_multiple_insertions,
     trie_insert(root, "abc");
     trie_insert(root, "cba");
 
-    // First word
-    cheat_assert(root->children[0] != NULL);
-    cheat_assert(root->children[0]->is_end_of_word == false);
-    cheat_assert(root->children[0]->children[1] != NULL);
-    cheat_assert(root->children[0]->children[1]->is_end_of_word == false);
-    cheat_assert(root->children[0]->children[1]->children[2] != NULL);
-    cheat_assert(root->children[0]->children[1]->children[2]->is_end_of_word == true);
-
-    // Second word
-    cheat_assert(root->children[2] != NULL);
-    cheat_assert(root->children[2]->is_end_of_word == false);
-    cheat_assert(root->children[2]->children[1] != NULL);
-    cheat_assert(root->children[2]->children[1]->is_end_of_word == false);
-    cheat_assert(root->children[2]->children[1]->children[0] != NULL);
-    cheat_assert(root->children[2]->children[1]->children[0]->is_end_of_word == true);
+    assert_trie_contains(root, "abc");
+    assert_trie_contains(root, "cba");
 )
