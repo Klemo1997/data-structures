@@ -14,8 +14,6 @@ CHEAT_DECLARE(
 
         for (int i = 0; i < strlen(key); i++) {
             cheat_assert(temp != NULL);
-            //todo: This applies only on non-crossing words in tries
-            cheat_assert(temp->is_end_of_word == false);
 
             char_index = CHAR_TO_INDEX(key[i]);
             temp = temp->children[char_index];
