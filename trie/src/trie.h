@@ -39,4 +39,9 @@ bool trie_search(struct TrieNode *root, const char *key);
  */
 bool trie_is_node_empty(struct TrieNode *root);
 
+/**
+ * Delete given key from trie if it exists
+ */
+void trie_delete(struct TrieNode **root, const char *key);
+
 #endif _TRIE_H_

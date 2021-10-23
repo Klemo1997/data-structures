@@ -79,10 +79,23 @@ CHEAT_TEST(trie_insert_sets_end_of_word_correctly,
     cheat_assert(trie_search(root, "h") == false);
 )
 
-CHEAT_TEST(tree_is_node_empty_works_correctly,
+CHEAT_TEST(trie_is_node_empty_works_correctly,
     struct TrieNode* root = trie_create_node();
     trie_insert(root, "aa");
 
     cheat_assert(trie_is_node_empty(root->children[0]) == false);
     cheat_assert(trie_is_node_empty(root->children[0]->children[0]) == true);
+)
+
+/**
+ * Use case - delete the only word that trie contains
+ * Also check if children are pointed to NULL after deallocation
+ */
+CHEAT_TEST(trie_delete_single_word,
+   struct TrieNode* root = trie_create_node();
+   trie_insert(root, "aa");
+   trie_delete(&root, "aa");
+
+   cheat_assert(trie_search(root, "aa") == false);
+   cheat_assert(root->children[0] == NULL);
 )
