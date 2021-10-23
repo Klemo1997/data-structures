@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "trie.h"
@@ -132,4 +133,47 @@ const char* trie_get_longest_prefix(struct TrieNode* root, const char *key) {
     prefix_holder = (char*) realloc(prefix_holder, (strlen(prefix_holder) + 1) * sizeof(char));
 
     return prefix_holder;
+}
+
+/**
+ * Recursive traversal of trie children and printing all words
+ */
+void trie_print_autocomplete_recursive(struct TrieNode* root, const char *key) {
+    if (root == NULL) {
+        return;
+    }
+
+    if (root->is_end_of_word) {
+        printf("%s\n", key);
+    }
+
+    for (int i = 0; i < ALPHABET_SIZE; i++) {
+        if (root->children[i] == NULL) {
+            continue;
+        }
+
+        int len = strlen(key);
+        char* appended_key = (char*) malloc(len + 2);
+        strcpy(appended_key, key);
+        appended_key[len] = i + 97;
+        appended_key[len + 1] = '\0';
+
+        trie_print_autocomplete_recursive(root->children[i], appended_key);
+
+        free(appended_key);
+    }
+}
+
+void trie_print_autocomplete(struct TrieNode* root, const char *key) {
+    struct TrieNode* temp = root;
+
+    for (int i = 0; i < strlen(key); i++) {
+        temp = temp->children[CHAR_TO_INDEX(key[i])];
+
+        if (temp == NULL) {
+            return;
+        }
+    }
+
+    trie_print_autocomplete_recursive(temp, key);
 }
