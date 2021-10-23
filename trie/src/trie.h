@@ -24,6 +24,9 @@ struct TrieNode {
  */
 struct TrieNode* trie_create_node(void);
 
+/**
+ * Insert a key into trie
+ */
 void trie_insert(struct TrieNode *root, const char *key);
 
 /**
