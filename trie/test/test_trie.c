@@ -99,3 +99,72 @@ CHEAT_TEST(trie_delete_single_word,
    cheat_assert(trie_search(root, "aa") == false);
    cheat_assert(root->children[0] == NULL);
 )
+
+/**
+ * Use case - Delete all inserted words in chronological order
+ */
+CHEAT_TEST(trie_delete_multiple_words,
+    struct TrieNode* root = trie_create_node();
+
+    trie_insert(root, "aha");
+    trie_insert(root, "hello");
+
+    trie_delete(&root, "aha");
+    trie_delete(&root, "hello");
+
+    cheat_assert(!trie_search(root, "aha"));
+    cheat_assert(!trie_search(root, "hello"));
+)
+
+/**
+ * Use case - Trie preserves non deleted words
+ */
+CHEAT_TEST(trie_preserves_non_deleted_words,
+    struct TrieNode* root = trie_create_node();
+
+    trie_insert(root, "aha");
+    trie_insert(root, "hello");
+
+    trie_delete(&root, "aha");
+
+    cheat_assert(!trie_search(root, "aha"));
+    cheat_assert(trie_search(root, "hello"));
+)
+
+/**
+ * Use case - Trie preserves shared path:
+ * words test and testing has shared path in t-e-s-t
+ *
+ * We have to ensure that deleting [test] key does not affect path
+ * to [testing] key
+ */
+CHEAT_TEST(trie_delete_preserves_shared_path,
+    struct TrieNode* root = trie_create_node();
+
+    trie_insert(root, "test");
+    trie_insert(root, "testing");
+
+    trie_delete(&root, "test");
+
+    cheat_assert(!trie_search(root, "test"));
+    cheat_assert(trie_search(root, "testing"));
+)
+
+/**
+ * Use case - Trie preserves shared path when longer word is deleted:
+ * words test and testing has shared path in t-e-s-t
+ *
+ * We have to ensure that deleting [testing] key does not affect path
+ * to shorter [test] key
+ */
+CHEAT_TEST(trie_delete_preserves_shared_path_when_longer_word_is_deleted,
+    struct TrieNode* root = trie_create_node();
+
+    trie_insert(root, "test");
+    trie_insert(root, "testing");
+
+    trie_delete(&root, "testing");
+
+    cheat_assert(trie_search(root, "test"));
+    cheat_assert(!trie_search(root, "testing"));
+)
