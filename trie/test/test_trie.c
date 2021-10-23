@@ -64,6 +64,14 @@ CHEAT_TEST(trie_multiple_char_insertion_to_empty_trie,
  *                                    b[1]
  *                                      \
  *                                      c[2]
+ *
+ *        root                            root
+ *        /                           /          \
+ *      a[0]       insert("cba")    a[0]        c[2]
+ *        \          --------->       \          /
+ *         b[1]                      b[1]      b[1]
+ *           \                         \       /
+ *           c[2]                      c[2]  a[0]
  */
 CHEAT_TEST(trie_multiple_insertions,
     struct TrieNode* root = trie_create_node();
