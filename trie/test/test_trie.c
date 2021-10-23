@@ -8,19 +8,20 @@
 #include "trie.h"
 
 CHEAT_DECLARE(
-    void assert_trie_contains(struct TrieNode* root, const char* key) {
+    bool does_trie_contain_key(struct TrieNode* root, const char* key) {
         struct TrieNode* temp = root;
         int char_index;
 
         for (int i = 0; i < strlen(key); i++) {
-            cheat_assert(temp != NULL);
+            if (temp == NULL) {
+                return false;
+            }
 
             char_index = CHAR_TO_INDEX(key[i]);
             temp = temp->children[char_index];
         }
 
-        cheat_assert(temp != NULL);
-        cheat_assert(temp->is_end_of_word == true);
+        return temp->is_end_of_word;
     }
 )
 
@@ -35,7 +36,7 @@ CHEAT_TEST(trie_insertion_to_empty_trie,
     struct TrieNode* root = trie_create_node();
     trie_insert(root, "a");
 
-    assert_trie_contains(root, "a");
+    cheat_assert(does_trie_contain_key(root, "a") == true);
 )
 
 /**
@@ -50,7 +51,7 @@ CHEAT_TEST(trie_multiple_char_insertion_to_empty_trie,
     struct TrieNode* root = trie_create_node();
     trie_insert(root, "ab");
 
-    assert_trie_contains(root, "ab");
+    cheat_assert(does_trie_contain_key(root, "ab") == true);
 )
 
 /**
@@ -76,6 +77,23 @@ CHEAT_TEST(trie_multiple_insertions,
     trie_insert(root, "abc");
     trie_insert(root, "cba");
 
-    assert_trie_contains(root, "abc");
-    assert_trie_contains(root, "cba");
+    cheat_assert(does_trie_contain_key(root, "abc") == true);
+    cheat_assert(does_trie_contain_key(root, "cba") == true);
+    does_trie_contain_key(root, "cba");
+)
+
+/**
+ * Use case - insertion sets up is_end_of_word correctly
+ */
+CHEAT_TEST(trie_insert_sets_end_of_word_correctly,
+    struct TrieNode* root = trie_create_node();
+
+    trie_insert(root, "hell");
+    trie_insert(root, "hello");
+
+    cheat_assert(does_trie_contain_key(root, "hell") == true);
+    cheat_assert(does_trie_contain_key(root, "hello") == true);
+    cheat_assert(does_trie_contain_key(root, "hel") == false);
+    cheat_assert(does_trie_contain_key(root, "he") == false);
+    cheat_assert(does_trie_contain_key(root, "h") == false);
 )
