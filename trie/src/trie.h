@@ -26,4 +26,9 @@ struct TrieNode* trie_create_node(void);
 
 void trie_insert(struct TrieNode *root, const char *key);
 
+/**
+ * Find if given key is present in trie or not
+ */
+bool trie_search(struct TrieNode *root, const char *key);
+
 #endif _TRIE_H_

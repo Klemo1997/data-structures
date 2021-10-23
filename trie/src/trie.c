@@ -36,3 +36,19 @@ void trie_insert(struct TrieNode *root, const char *key) {
     // When we get to right node, we initialize it as the end of word
     temp->is_end_of_word = true;
 }
+
+bool trie_search(struct TrieNode* root, const char* key) {
+    struct TrieNode* temp = root;
+    int char_index;
+
+    for (int i = 0; i < strlen(key); i++) {
+        if (temp == NULL) {
+            return false;
+        }
+
+        char_index = CHAR_TO_INDEX(key[i]);
+        temp = temp->children[char_index];
+    }
+
+    return temp->is_end_of_word;
+}
