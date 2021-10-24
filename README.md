@@ -5,7 +5,7 @@ implemented in C99 language.
 Repository currently contains implementation of:
 1. [Linked list](linked_list)
 2. [Binary search tree](binary_search_tree)
-3. [Trie](trie) (in progress)
+3. [Trie](trie)
 
 ## How to run it:
 
