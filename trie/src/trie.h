@@ -53,9 +53,8 @@ void trie_delete(struct TrieNode **root, const char *key);
 const char* trie_get_longest_prefix(struct TrieNode* root, const char *key);
 
 /**
- * Print all auto suggestions (descendants) of given key
- * TODO: Change method to return string array
+ * Get all auto suggestions (descendants) of given key
  */
-void trie_print_autocomplete(struct TrieNode* root, const char *key);
+char** trie_get_autocomplete_suggestions(struct TrieNode* root, const char *key);
 
 #endif _TRIE_H_

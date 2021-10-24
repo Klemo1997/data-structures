@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "trie.h"
+#include "array_list/array_list.h"
 
 struct TrieNode* trie_create_node(void) {
     struct TrieNode* root = (struct TrieNode*) malloc(sizeof(struct TrieNode));
@@ -138,13 +139,13 @@ const char* trie_get_longest_prefix(struct TrieNode* root, const char *key) {
 /**
  * Recursive traversal of trie children and printing all words
  */
-void trie_print_autocomplete_recursive(struct TrieNode* root, const char *key) {
+void trie_get_autocomplete_suggestions_recursive(struct TrieNode* root, const char *key, struct ArrayList** array_list) {
     if (root == NULL) {
         return;
     }
 
     if (root->is_end_of_word) {
-        printf("%s\n", key);
+        array_list_insert(array_list, key);
     }
 
     for (int i = 0; i < ALPHABET_SIZE; i++) {
@@ -158,22 +159,35 @@ void trie_print_autocomplete_recursive(struct TrieNode* root, const char *key) {
         appended_key[len] = i + 97;
         appended_key[len + 1] = '\0';
 
-        trie_print_autocomplete_recursive(root->children[i], appended_key);
+        trie_get_autocomplete_suggestions_recursive(root->children[i], appended_key, array_list);
 
         free(appended_key);
     }
 }
 
-void trie_print_autocomplete(struct TrieNode* root, const char *key) {
+char** trie_get_autocomplete_suggestions(struct TrieNode* root, const char *key) {
     struct TrieNode* temp = root;
+    char** minimal_array;
 
     for (int i = 0; i < strlen(key); i++) {
         temp = temp->children[CHAR_TO_INDEX(key[i])];
 
         if (temp == NULL) {
-            return;
+            return minimal_array;
         }
     }
 
-    trie_print_autocomplete_recursive(temp, key);
+    // Create an array list
+    struct ArrayList* array_list = array_list_create();
+
+    // Fill it with autocomplete suggestions
+    trie_get_autocomplete_suggestions_recursive(temp, key, &array_list);
+
+    // Trim it to minimal possible value
+    minimal_array = array_list_get_minimal_array(array_list);
+
+    // Destroy array list
+    array_list_destroy(&array_list);
+
+    return minimal_array;
 }

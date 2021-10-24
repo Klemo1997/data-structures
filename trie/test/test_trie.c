@@ -12,6 +12,12 @@ CHEAT_DECLARE(
         cheat_assert_int(strcmp(received, expected), 0);
     }
 
+    void assert_string_array(const char** received, const char** expected) {
+        for(int i = 0; expected[i] != NULL; i++) {
+            assert_string(received[i], expected[i]);
+        }
+    }
+
     struct TrieNode* get_test_dictionary() {
         struct TrieNode* root = trie_create_node();
         char keys[][8] = {"are", "area", "base", "cat", "cater", "children", "basement"};
@@ -233,4 +239,36 @@ CHEAT_TEST(trie_get_longest_prefix_case4,
        trie_get_longest_prefix(root, "xyz"),
        ""
    );
+)
+
+CHEAT_TEST(trie_get_autocomplete_suggestions_case1,
+   struct TrieNode* root = get_test_dictionary();
+   const char* expected[64] = {"are", "area", NULL};
+   const char** received = (const char **) trie_get_autocomplete_suggestions(root, "are");
+
+   assert_string_array(received , expected);
+)
+
+CHEAT_TEST(trie_get_autocomplete_suggestions_case2,
+    struct TrieNode* root = get_test_dictionary();
+    const char* expected[64] = {"cat", "cater", NULL};
+    const char** received = (const char **) trie_get_autocomplete_suggestions(root, "ca");
+
+    assert_string_array(received , expected);
+)
+
+CHEAT_TEST(trie_get_autocomplete_suggestions_case3,
+    struct TrieNode* root = get_test_dictionary();
+    const char* expected[64] = {"area", NULL};
+    const char** received = (const char **) trie_get_autocomplete_suggestions(root, "area");
+
+    assert_string_array(received , expected);
+)
+
+CHEAT_TEST(trie_get_autocomplete_suggestions_case4,
+    struct TrieNode* root = get_test_dictionary();
+    const char* expected[64] = {NULL};
+    const char** received = (const char **) trie_get_autocomplete_suggestions(root, "xyz");
+
+    assert_string_array(received , expected);
 )
