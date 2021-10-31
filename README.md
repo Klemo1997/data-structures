@@ -6,6 +6,7 @@ Repository currently contains implementation of:
 1. [Linked list](linked_list)
 2. [Binary search tree](binary_search_tree)
 3. [Trie](trie)
+4. [Stack](stack)
 
 ## How to run it:
 
