@@ -21,7 +21,7 @@ struct HashTableEntry {
     /**
      * Reference to next element in case there is collision
      */
-    struct HashTableElement* next;
+    struct HashTableEntry* next;
 };
 
 struct HashTable {
