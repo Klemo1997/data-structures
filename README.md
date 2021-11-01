@@ -7,7 +7,7 @@ Repository currently contains implementation of:
 2. [Binary search tree](binary_search_tree)
 3. [Trie](trie)
 4. [Stack](stack)
-4. [Queue](queue) (in progress)
+5. [Queue](queue) (in progress)
 
 ## How to run it:
 
